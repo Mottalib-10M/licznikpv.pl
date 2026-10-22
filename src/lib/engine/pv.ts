@@ -136,3 +136,11 @@ export const maxPriceFor = (years: number, savings: number, grant = 0) => saving
 export function sizeFor(useKwh: number, yieldKwhKwp: number, ratio = 1): number {
   return Math.round(((useKwh * ratio) / yieldKwhKwp) * 10) / 10;
 }
+
+/** Produkcja 1 kWp na dobę w każdym miesiącu (kWh), dla rocznego uzysku i orientacji :
+ *  podstawa doboru instalacji bez sieci (off-grid), gdzie decyduje najsłabszy miesiąc. */
+export function dailyPerKwp(yieldKwhKwp: number, voivIdx = 6, tilt = 35, aspect: Aspect = '0'): number[] {
+  const fac = orientFactor(tilt, aspect);
+  const shapeM = MODEL.voivodeships[voivIdx]?.shape ?? MODEL.voivodeships[6].shape;
+  return shapeM.map((s, m) => (yieldKwhKwp * s * fac[m]) / DAYS[m]);
+}

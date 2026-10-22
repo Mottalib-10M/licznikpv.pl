@@ -57,3 +57,11 @@ export function hpMonthly(kwhYear: number): number[] {
   const tot = season.reduce((a, s, i) => a + s * days[i], 0);
   return season.map((s, i) => (s * days[i] / tot) * kwhYear);
 }
+
+/** Ciepło użytkowe na ciepłą wodę w domu jednorodzinnym, kWh/rok : wzór (61) rozporządzenia
+ *  w sprawie metodologii charakterystyki energetycznej (Dz.U. 2015 poz. 376), tabela 27 :
+ *  V = 1,4 dm³/(m²·doba), kR = 0,9, woda 10 → 55 °C, c = 4,19 kJ/(kg·K), 365 dni. */
+export function cwuKwh(area: number): number {
+  const c = P.cwu;
+  return (c.litresPerM2Day * area * c.cWater * (c.tHot - c.tCold) * c.kR * c.days) / 3600;
+}

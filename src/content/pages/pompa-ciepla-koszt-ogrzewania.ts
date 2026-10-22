@@ -9,7 +9,7 @@ export default definePage({
   sources: ['eco813', 'ureTaryfy2026', 'energaOperator', 'myOrlen', 'psgTaryfa', 'gusCoal', 'cpNaCo'],
   pl: {
     slug: 'pompa-ciepla-koszt-ogrzewania', nav: 'Koszt ogrzewania pompą', card: 'Roczny rachunek pompy ciepła, węgla i gazu.',
-    title: 'Pompa ciepła koszt ogrzewania 2026: taniej niż węgiel i gaz?',
+    title: 'Pompa ciepła: koszty eksploatacji i ogrzewania w 2026',
     description: 'Ile kosztuje ogrzewanie pompą ciepła w 2026 r.: roczny rachunek za prąd Twojego domu w porównaniu z węglem i gazem, z SCOP z karty pompy i cenami 2026.',
     h1: 'Koszt ogrzewania pompą ciepła w 2026 roku',
     intro: 'Wpisz powierzchnię, stan domu i SCOP pompy z karty produktu. Kalkulator porówna roczny koszt z węglem i gazem.',
@@ -29,6 +29,8 @@ export default definePage({
 <h2>Roczny koszt ogrzewania czterech typowych domów</h2>
 ${h.table(['Dom', `Pompa, SCOP ${h.num(h.M.scopMin(true), 1)}`, 'Pompa, SCOP 4', 'Węgiel', 'Gaz'], rows, `Prąd G11 2026 ${h.zl(h.M.elecGross(), 2)}/kWh, węgiel ${h.zl(h.P.coal.pricePerTon2025)}/t (GUS 2025), gaz myORLEN + PSG obszar warszawski z opłatą stałą.`, ['l', 'r', 'r', 'r', 'r'])}
 <p>SCOP ${h.num(h.M.scopMin(true), 1)} to dolna granica z rozporządzenia UE 813/2013 dla pomp niskotemperaturowych: tyle musi osiągnąć każda pompa sprzedawana w Unii. Pompy z listy ZUM programu Czyste Powietrze zwykle mają wyższy SCOP. Wartość dla Twojego urządzenia znajdziesz na karcie produktu.</p>
+<h2>Koszty eksploatacji pompy ciepła: z czego składa się rachunek</h2>
+<p>Głównym kosztem eksploatacji pompy jest prąd. Każda kilowatogodzina w taryfie G11 na 2026 r. kosztuje około ${h.zl(h.M.elecGross(), 2)} brutto, z czego ${h.zl(h.P.elec.energyNet * (1 + h.P.vat), 2)} to energia, a ${h.zl((h.P.elec.distVarNet + h.P.elec.qualityNet + h.P.elec.ozeNet + h.P.elec.kogenNet) * (1 + h.P.vat), 2)} dystrybucja zmienna i opłaty, które rosną razem ze zużyciem. Opłaty stałe licznika płacisz i tak, więc pompa ich nie zwiększa. Przy domu 120 m² ze wskaźnikiem 110 kWh/m² różnica między pompą o minimalnym SCOP a pompą z SCOP 4 to ${h.zl(H(h, 120, 110).hp.cost - H(h, 120, 110, 4).hp.cost)} rocznie, czyli przy wyborze urządzenia sprawność waży więcej niż kilkuprocentowa różnica w cenie zakupu. Przeglądy serwisowe zależą od warunków gwarancji producenta, sprawdź je w karcie gwarancyjnej przed zakupem.</p>
 <h2>Jak obniżyć koszt ogrzewania pompą</h2>
 <p>Najwięcej daje ocieplenie: dom ze wskaźnikiem 70 zamiast 110 kWh/m² potrzebuje o jedną trzecią mniej ciepła. Drugie w kolejności jest niższa temperatura zasilania, bo pompa pracująca na 35 °C dla podłogówki osiąga wyższy SCOP niż przy 55 °C dla grzejników. Trzecie to prąd z własnych paneli, choć zimą produkują one niewiele; ile pokryją, liczy strona ${h.a('pompa-ciepla-i-fotowoltaika', 'pompa ciepła i fotowoltaika')}. Ile kosztuje sama pompa po dotacji i po ilu latach zwraca się względem gazu, pokazuje ${h.a('pompa-ciepla-cena', 'cena pompy ciepła')}.</p>`;
     },
@@ -55,6 +57,8 @@ ${h.table(['Dom', `Pompa, SCOP ${h.num(h.M.scopMin(true), 1)}`, 'Pompa, SCOP 4',
 <h2>Yearly heating cost of four typical houses</h2>
 ${h.table(['House', `Pump, SCOP ${h.num(h.M.scopMin(true), 1)}`, 'Pump, SCOP 4', 'Coal', 'Gas'], rows, `Power G11 2026 ${h.zl(h.M.elecGross(), 2)}/kWh, coal ${h.zl(h.P.coal.pricePerTon2025)}/t (Statistics Poland 2025), gas myORLEN + PSG Warsaw area with fixed charge.`, ['l', 'r', 'r', 'r', 'r'])}
 <p>SCOP ${h.num(h.M.scopMin(true), 1)} is the floor set by EU Regulation 813/2013 for low-temperature pumps: every pump sold in the Union must reach it. Pumps on the ZUM list of the Czyste Powietrze programme usually have a higher SCOP. Your unit’s value is on its product sheet.</p>
+<h2>Heat pump running costs: what the bill is made of</h2>
+<p>The main running cost of a pump is electricity. Each kilowatt-hour on the 2026 G11 tariff costs about ${h.zl(h.M.elecGross(), 2)} gross, of which ${h.zl(h.P.elec.energyNet * (1 + h.P.vat), 2)} is energy and ${h.zl((h.P.elec.distVarNet + h.P.elec.qualityNet + h.P.elec.ozeNet + h.P.elec.kogenNet) * (1 + h.P.vat), 2)} variable distribution and charges, which grow with use. You pay the meter’s fixed charges anyway, so the pump does not add to them. For a 120 m² house at 110 kWh/m², the gap between a pump at the minimum SCOP and one at SCOP 4 is ${h.zl(H(h, 120, 110).hp.cost - H(h, 120, 110, 4).hp.cost)} a year, so when choosing a unit efficiency weighs more than a few per cent of purchase price. Servicing depends on the maker’s warranty terms; check them on the warranty card before you buy.</p>
 <h2>How to lower the cost of heating with a pump</h2>
 <p>Insulation helps most: a house at 70 instead of 110 kWh/m² needs a third less heat. Next comes a lower flow temperature, because a pump running at 35 °C for underfloor heating reaches a higher SCOP than at 55 °C for radiators. Third is power from your own panels, though they produce little in winter; the ${h.a('pompa-ciepla-i-fotowoltaika', 'heat pump and solar')} page works out how much they cover. What the pump itself costs after the grant, and how fast it pays back against gas, is on the ${h.a('pompa-ciepla-cena', 'heat pump price')} page.</p>`;
     },

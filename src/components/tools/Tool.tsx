@@ -9,7 +9,7 @@ interface Props { tool: string; arg?: string; lang: L; id: string; methodHref?: 
 export default function Tool({ tool, arg, lang, id, methodHref }: Props) {
   const n = arg ? Number(arg) : NaN;
   switch (tool) {
-    case 'pv': return <PvCalc lang={lang} id={id} methodHref={methodHref} kwp={Number.isFinite(n) ? n : 6} use={Number.isFinite(n) ? Math.round(n * 700 / 100) * 100 : 4000} />;
+    case 'pv': return <PvCalc lang={lang} id={id} methodHref={methodHref} kwp={Number.isFinite(n) ? n : 6} use={Number.isFinite(n) ? Math.max(2500, Math.round(n * 700 / 100) * 100) : 4000} />;
     case 'cena': case 'produkcja': case 'depozyt': case 'orientacja': return <PvCalc lang={lang} id={id} methodHref={methodHref} mode={tool as PvMode} />;
     case 'magazyn': return <PvCalc lang={lang} id={id} methodHref={methodHref} mode="magazyn" battery={10} kwp={5} />;
     case 'rce': return <RceTool lang={lang} id={id} methodHref={methodHref} />;

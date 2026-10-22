@@ -380,7 +380,30 @@
         "pl": "Ministerstwo Finansów, podatki.gov.pl: ulga termomodernizacyjna (limit 53 000 zł, fotowoltaika, magazyn energii, pompa ciepła)",
         "en": "Ministry of Finance, podatki.gov.pl: thermomodernisation relief (PLN 53,000 limit, solar, storage, heat pumps)"
       }
+    },
+    "prawoEnergetyczne": {
+      "url": "https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20260000043",
+      "label": {
+        "pl": "Prawo energetyczne, tekst jednolity Dz.U. 2026 poz. 43 (art. 7 ust. 8d4–8d7: zgłoszenie mikroinstalacji)",
+        "en": "Polish Energy Law, consolidated text Dz.U. 2026 item 43 (Art. 7(8d4)–(8d7): micro-installation notification)"
+      }
+    },
+    "metodologiaCwu": {
+      "url": "https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20150000376",
+      "label": {
+        "pl": "Rozporządzenie w sprawie metodologii charakterystyki energetycznej budynku, Dz.U. 2015 poz. 376 (wzór 61, tabela 27: ciepła woda)",
+        "en": "Regulation on the building energy performance methodology, Dz.U. 2015 item 376 (formula 61, table 27: hot water)"
+      }
     }
   },
-  "ulgaTermoCap": 53000
+  "ulgaTermoCap": 53000,
+  "cwu": {
+    "_note": "Rozporządzenie MIiR z 27.02.2015 w sprawie metodologii wyznaczania charakterystyki energetycznej budynku (Dz.U. 2015 poz. 376), wzór (61) i tabela 27: budynek mieszkalny jednorodzinny. Odczyt 2026-10-22.",
+    "litresPerM2Day": 1.4,
+    "kR": 0.9,
+    "tHot": 55,
+    "tCold": 10,
+    "cWater": 4.19,
+    "days": 365
+  }
 }

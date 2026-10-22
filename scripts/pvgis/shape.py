@@ -8,7 +8,7 @@ for asp in (0,-45,45,-90,90):
   print(asp,len(res[asp]),res[asp][12],flush=True); time.sleep(1)
 json.dump(res,open('hourly.json','w'))
 fac={}
-for ang in (10,20,30,35,40,45):
+for ang in (10,20,30,35,40,45,90):  # 90° : panele pionowe (balkon), dodane 2026-10-22
   for asp in (0,-45,45,-90,90):
     u=f"https://re.jrc.ec.europa.eu/api/v5_3/PVcalc?lat=52.23&lon=21.01&peakpower=1&loss=14&angle={ang}&aspect={asp}&outputformat=json"
     d=json.load(urllib.request.urlopen(urllib.request.Request(u,headers={'User-Agent':'Mozilla/5.0'}),timeout=60))

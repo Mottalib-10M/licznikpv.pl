@@ -8,7 +8,7 @@ export default definePage({
   sources: ['pvgis', 'ozeAct', 'rcem', 'ureTaryfy2026', 'pme'],
   pl: {
     slug: 'fotowoltaika-10-kw', nav: 'Fotowoltaika 10 kW', card: 'Cena, przy której 10 kWp się zwraca.',
-    title: 'Fotowoltaika 10 kW: cena opłacalna, produkcja i zwrot',
+    title: 'Fotowoltaika 10kW: cena opłacalna, produkcja i zwrot 2026',
     description: 'Fotowoltaika 10 kW: ile może kosztować, żeby zwróciła się w 8, 10 lub 12 lat, ile prądu da w Twojej gminie według PVGIS i ile nadwyżki sprzedasz do sieci.',
     h1: 'Fotowoltaika 10 kW: ile może kosztować, żeby się opłacała',
     intro: 'Przy 10 kWp pytanie brzmi nie „ile kosztuje”, tylko „do jakiej ceny ma sens”. Kalkulator liczy to z Twojego zużycia.',

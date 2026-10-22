@@ -112,3 +112,23 @@ describe('magazyn : większy nie obniża oszczędności', () => {
     }
   });
 });
+
+describe('ciepła woda, panele pionowe, off-grid (2026-10-22)', async () => {
+  const { cwuKwh, dailyPerKwp } = await import('./index');
+  it('ciepła woda : wzór (61), dom 100 m² ≈ 2 408 kWh/rok', () => {
+    expect(cwuKwh(100)).toBeCloseTo((1.4 * 100 * 4.19 * 45 * 0.9 * 365) / 3600, 6);
+    expect(cwuKwh(100)).toBeGreaterThan(2400);
+    expect(cwuKwh(100)).toBeLessThan(2420);
+  });
+  it('panel pionowy na południe daje mniej w roku, ale więcej w grudniu niż dach 35°', () => {
+    const v = simulate({ ...base, tilt: 90 }).prod, d = simulate(base).prod;
+    expect(v).toBeLessThan(d * 0.8);
+    expect(orientFactor(90, '0')[11]).toBeGreaterThan(1);
+  });
+  it('produkcja na dobę : suma miesięcy = uzysk roczny', () => {
+    const d = dailyPerKwp(1050);
+    const days = [31, 28.25, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+    expect(d.reduce((a, x, i) => a + x * days[i], 0)).toBeCloseTo(1050, 0);
+    expect(d[11]).toBe(Math.min(...d)); // grudzień decyduje o doborze off-grid
+  });
+});
