@@ -1,0 +1,386 @@
+{
+  "year": 2026,
+  "retrieved_at": "2026-10-22",
+  "vat": 0.23,
+  "elec": {
+    "_note": "Ceny netto zł/kWh, taryfa G11 na 2026 r. zatwierdzona przez Prezesa URE 17.12.2025. Energia: cena sprzedawcy z urzędu (Tauron 0,4970, Energa 0,4968, PGE 0,4982). Dystrybucja: stawka zmienna sieciowa Energa-Operator G11 (przykład; każdy OSD ma własną). Opłaty: jakościowa, OZE, kogeneracyjna.",
+    "energyNet": 0.497,
+    "energyBySeller": {
+      "tauron": 0.497,
+      "energa": 0.4968,
+      "pge": 0.4982
+    },
+    "ureAvgEnergyNet": 0.49516,
+    "distVarNet": 0.3485,
+    "qualityNet": 0.0331,
+    "ozeNet": 0.0073,
+    "kogenNet": 0.003,
+    "householdsG11Share": 0.9,
+    "avgUseMWh": 1.8,
+    "gusG11Gross2025": 1.15
+  },
+  "netBilling": {
+    "depositFactor": 1.23,
+    "refundCapRCEm": 0.2,
+    "refundCapRCE": 0.3,
+    "depositMonths": 12,
+    "settlementYears": 15,
+    "rceSince": "2024-07-01",
+    "netBillingSince": "2022-04-01"
+  },
+  "gas": {
+    "energyNet": 0.19729,
+    "energyFrom": "2026-02-25",
+    "energyUntil": "2026-12-31",
+    "boilerEff": 0.86,
+    "areas": {
+      "GD": {
+        "dist": 0.05596,
+        "fixed": 55.04
+      },
+      "PO": {
+        "dist": 0.05388,
+        "fixed": 49.78
+      },
+      "TA": {
+        "dist": 0.04506,
+        "fixed": 55.2
+      },
+      "WA": {
+        "dist": 0.03919,
+        "fixed": 63.57
+      },
+      "WR": {
+        "dist": 0.05399,
+        "fixed": 51.8
+      },
+      "ZA": {
+        "dist": 0.06087,
+        "fixed": 37.82
+      }
+    },
+    "gusW11Gross2025": 0.52
+  },
+  "coal": {
+    "pricePerTon2025": 1601.7,
+    "pricePerTon2024": 1703.46,
+    "mjPerKg": 24,
+    "boilerEff": 0.75
+  },
+  "heatPump": {
+    "etaSLow": 1.25,
+    "etaSMid": 1.1,
+    "cc": 2.5
+  },
+  "minWage2026": 4806,
+  "cp": {
+    "changesFrom": "2026-07-20",
+    "ownershipYears": 3,
+    "basicAnnualIncome": 135000,
+    "raisedMonthly": {
+      "multi": 2250,
+      "single": 3150
+    },
+    "highestMonthly": {
+      "multi": 1300,
+      "single": 1800
+    },
+    "raisedBizWages": 40,
+    "highestBizWages": 12,
+    "highestMinEU": 140,
+    "rates": {
+      "basic": 0.4,
+      "raised": 0.7,
+      "highest": 1.0
+    },
+    "grants": {
+      "pcAirWater": [
+        12600,
+        22000,
+        31500
+      ],
+      "pcAirWaterPlus": [
+        14080,
+        24640,
+        35200
+      ],
+      "pcAirAir": [
+        4480,
+        7840,
+        11200
+      ],
+      "pcGround": [
+        18000,
+        31500,
+        45000
+      ],
+      "groundSource": [
+        8000,
+        14000,
+        20000
+      ],
+      "districtHeat": [
+        8900,
+        15575,
+        22250
+      ],
+      "biomass": [
+        8200,
+        14350,
+        20500
+      ],
+      "electric": [
+        4480,
+        7840,
+        11200
+      ],
+      "coInstall": [
+        8200,
+        14350,
+        20500
+      ],
+      "audit": [
+        480,
+        840,
+        1200
+      ],
+      "certificate": [
+        160,
+        280,
+        400
+      ]
+    },
+    "thermo": {
+      "mid": [
+        19200,
+        33600,
+        0
+      ],
+      "high": [
+        33200,
+        58100,
+        83000
+      ]
+    }
+  },
+  "moj6": {
+    "intakeEnd": "2025-09-12",
+    "statusDate": "2026-04-09"
+  },
+  "pme": {
+    "pme1": {
+      "from": "2026-03-30",
+      "to": "2026-06-19"
+    },
+    "pme2": {
+      "from": "2026-10-20",
+      "to": "2027-10-01",
+      "budgetBn": 1,
+      "costsFrom": "2025-11-01"
+    },
+    "rate": 0.3,
+    "perKwh": 800,
+    "capNetBilling": 16000,
+    "capNetMetering": 8000,
+    "minKwh": 10,
+    "priceCapPerKwh": 3000,
+    "heatRate": 0.3,
+    "heatCap": 1000,
+    "heatMinL": 100,
+    "euBonusCap": 2000,
+    "euBonusRate": 0.5,
+    "maxPerPPE": 19000
+  },
+  "sources": {
+    "pvgis": {
+      "url": "https://joint-research-centre.ec.europa.eu/photovoltaic-geographical-information-system-pvgis_en",
+      "label": {
+        "pl": "PVGIS 5.3, Wspólne Centrum Badawcze Komisji Europejskiej (dane SARAH3, 2005–2023)",
+        "en": "PVGIS 5.3, European Commission Joint Research Centre (SARAH3 data, 2005–2023)"
+      }
+    },
+    "pvgisTool": {
+      "url": "https://re.jrc.ec.europa.eu/pvg_tools/en/",
+      "label": {
+        "pl": "Narzędzie PVGIS, sprawdzenie wyniku dla własnego dachu",
+        "en": "PVGIS tool, to check the result for your own roof"
+      }
+    },
+    "ozeAct": {
+      "url": "https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20260000068",
+      "label": {
+        "pl": "Ustawa o odnawialnych źródłach energii, tekst jednolity Dz.U. 2026 poz. 68 (art. 4, 4b, 4c)",
+        "en": "Polish Renewable Energy Sources Act, consolidated text Dz.U. 2026 item 68 (Art. 4, 4b, 4c)"
+      }
+    },
+    "rcem": {
+      "url": "https://www.pse.pl/oire/rcem-rynkowa-miesieczna-cena-energii-elektrycznej",
+      "label": {
+        "pl": "PSE: RCEm, rynkowa miesięczna cena energii elektrycznej",
+        "en": "PSE: RCEm, monthly market electricity price"
+      }
+    },
+    "rceApi": {
+      "url": "https://api.raporty.pse.pl/",
+      "label": {
+        "pl": "PSE, API raportów: RCE dla każdego okresu rozliczenia",
+        "en": "PSE report API: RCE for every settlement period"
+      }
+    },
+    "netBillingGov": {
+      "url": "https://www.gov.pl/web/klimat/net-billing",
+      "label": {
+        "pl": "Ministerstwo Klimatu i Środowiska: net-billing",
+        "en": "Polish Ministry of Climate and Environment: net-billing"
+      }
+    },
+    "ureTaryfy2026": {
+      "url": "https://www.ure.gov.pl/pl/urzad/informacje-ogolne/aktualnosci/13002,Prezes-Urzedu-Regulacji-Energetyki-zatwierdzil-taryfy-na-sprzedaz-i-dystrybucje-.html",
+      "label": {
+        "pl": "URE, 17.12.2025: taryfy na sprzedaż i dystrybucję prądu na 2026 r.",
+        "en": "URE, 17 Dec 2025: 2026 electricity sale and distribution tariffs"
+      }
+    },
+    "energaOperator": {
+      "url": "https://bip.ure.gov.pl/download/3/20347/EnergaOperator.pdf",
+      "label": {
+        "pl": "Taryfa Energa-Operator na 2026 r. (BIP URE)",
+        "en": "Energa-Operator 2026 tariff (URE bulletin)"
+      }
+    },
+    "tauronSprzedaz": {
+      "url": "https://bip.ure.gov.pl/download/3/20340/TauronSprzedaz.pdf",
+      "label": {
+        "pl": "Taryfa Tauron Sprzedaż na 2026 r. (BIP URE)",
+        "en": "Tauron Sprzedaż 2026 tariff (URE bulletin)"
+      }
+    },
+    "psgTaryfa": {
+      "url": "https://bip.ure.gov.pl/download/3/20343/PSG.pdf",
+      "label": {
+        "pl": "Taryfa nr 14 PSG na 2026 r., stawki dystrybucyjne (BIP URE)",
+        "en": "PSG tariff no. 14 for 2026, distribution rates (URE bulletin)"
+      }
+    },
+    "urePsg": {
+      "url": "https://www.ure.gov.pl/pl/urzad/informacje-ogolne/aktualnosci/13003,x.html",
+      "label": {
+        "pl": "URE: taryfa PSG na 2026 r.",
+        "en": "URE: PSG tariff for 2026"
+      }
+    },
+    "myOrlen": {
+      "url": "https://www.ure.gov.pl/pl/urzad/informacje-ogolne/aktualnosci/13313,x.html",
+      "label": {
+        "pl": "URE: taryfa myORLEN przedłużona do 31.12.2026 (197,29 zł/MWh)",
+        "en": "URE: myORLEN gas tariff extended to 31 Dec 2026 (PLN 197.29/MWh)"
+      }
+    },
+    "myOrlenFeb": {
+      "url": "https://www.ure.gov.pl/pl/urzad/informacje-ogolne/aktualnosci/13114,x.html",
+      "label": {
+        "pl": "URE: zmiana taryfy myORLEN od 25.02.2026",
+        "en": "URE: myORLEN tariff change from 25 Feb 2026"
+      }
+    },
+    "gusCoal": {
+      "url": "https://bdl.stat.gov.pl/api/v1/data/by-variable/5029?format=json&unit-level=0",
+      "label": {
+        "pl": "GUS, Bank Danych Lokalnych: średnia cena węgla kamiennego za tonę (2025)",
+        "en": "Statistics Poland, Local Data Bank: average hard coal price per tonne (2025)"
+      }
+    },
+    "gusElec": {
+      "url": "https://bdl.stat.gov.pl/api/v1/data/by-variable/5071?format=json&unit-level=0",
+      "label": {
+        "pl": "GUS, Bank Danych Lokalnych: średnia cena prądu G-11 za kWh (2025)",
+        "en": "Statistics Poland, Local Data Bank: average G-11 electricity price per kWh (2025)"
+      }
+    },
+    "coalReg": {
+      "url": "https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20240001618",
+      "label": {
+        "pl": "Rozporządzenie w sprawie wymagań jakościowych dla paliw stałych, Dz.U. 2024 poz. 1618",
+        "en": "Regulation on quality requirements for solid fuels, Dz.U. 2024 item 1618"
+      }
+    },
+    "eco813": {
+      "url": "https://eur-lex.europa.eu/eli/reg/2013/813/oj",
+      "label": {
+        "pl": "Rozporządzenie Komisji (UE) nr 813/2013, ekoprojekt ogrzewaczy (kotły gazowe, pompy ciepła)",
+        "en": "Commission Regulation (EU) No 813/2013, ecodesign of space heaters (gas boilers, heat pumps)"
+      }
+    },
+    "eco1189": {
+      "url": "https://eur-lex.europa.eu/eli/reg/2015/1189/oj",
+      "label": {
+        "pl": "Rozporządzenie Komisji (UE) 2015/1189, ekoprojekt kotłów na paliwo stałe",
+        "en": "Commission Regulation (EU) 2015/1189, ecodesign of solid fuel boilers"
+      }
+    },
+    "cpDlaKogo": {
+      "url": "https://czystepowietrze.gov.pl/wez-dofinansowanie/dla-kogo",
+      "label": {
+        "pl": "Czyste Powietrze: dla kogo (progi dochodowe po zmianach z 20.07.2026)",
+        "en": "Czyste Powietrze: who qualifies (income thresholds after the 20 July 2026 changes)"
+      }
+    },
+    "cpNaCo": {
+      "url": "https://czystepowietrze.gov.pl/wez-dofinansowanie/na-co-i-ile",
+      "label": {
+        "pl": "Czyste Powietrze: na co i ile (maksymalne kwoty dotacji)",
+        "en": "Czyste Powietrze: what and how much (maximum grant amounts)"
+      }
+    },
+    "cpDocs": {
+      "url": "https://czystepowietrze.gov.pl/wez-dofinansowanie/dokumenty-programowe",
+      "label": {
+        "pl": "Czyste Powietrze: dokumenty programowe",
+        "en": "Czyste Powietrze: programme documents"
+      }
+    },
+    "minWage": {
+      "url": "https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20250001242",
+      "label": {
+        "pl": "Rozporządzenie RM o minimalnym wynagrodzeniu na 2026 r. (4806 zł), Dz.U. 2025 poz. 1242",
+        "en": "Minimum wage regulation for 2026 (PLN 4,806), Dz.U. 2025 item 1242"
+      }
+    },
+    "mojPrad": {
+      "url": "https://mojprad.gov.pl/",
+      "label": {
+        "pl": "Mój Prąd: strona programu (NFOŚiGW)",
+        "en": "Mój Prąd programme website (NFOŚiGW)"
+      }
+    },
+    "pme": {
+      "url": "https://przydomowemagazyny.gov.pl/o-programie/",
+      "label": {
+        "pl": "Przydomowe Magazyny Energii: o programie",
+        "en": "Przydomowe Magazyny Energii (home energy storage): about the programme"
+      }
+    },
+    "pmeProgram": {
+      "url": "https://przydomowemagazyny.gov.pl/wp-content/uploads/2026/10/Program_-PME_FM.pdf",
+      "label": {
+        "pl": "Program priorytetowy PME, część 2 (Fundusz Modernizacyjny), październik 2026",
+        "en": "PME priority programme, part 2 (Modernisation Fund), October 2026"
+      }
+    },
+    "pmeFaq": {
+      "url": "https://przydomowemagazyny.gov.pl/faq/faq-dla-pme-czesc-2-z-fm/",
+      "label": {
+        "pl": "PME część 2: pytania i odpowiedzi",
+        "en": "PME part 2: questions and answers"
+      }
+    },
+    "ulgaTermo": {
+      "url": "https://www.podatki.gov.pl/ulgi-i-odliczenia/ulga-termomodernizacyjna-pit-kto-i-ile-moze-odliczyc",
+      "label": {
+        "pl": "Ministerstwo Finansów, podatki.gov.pl: ulga termomodernizacyjna (limit 53 000 zł, fotowoltaika, magazyn energii, pompa ciepła)",
+        "en": "Ministry of Finance, podatki.gov.pl: thermomodernisation relief (PLN 53,000 limit, solar, storage, heat pumps)"
+      }
+    }
+  },
+  "ulgaTermoCap": 53000
+}

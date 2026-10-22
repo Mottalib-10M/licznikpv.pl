@@ -1,0 +1,57 @@
+---
+/** Polityka redakcyjna / Editorial policy (pl, en), noindex. */
+import PageLayout from '../../layouts/PageLayout.astro';
+import { AUTHOR_NAME, CONTACT_EMAIL, LAST_UPDATED, REVIEW_CYCLE_MONTHS, SITE_NAMES } from '../../data/site-config';
+import { route, type Locale } from '../../i18n/routes';
+interface Props { lang: Locale }
+const { lang } = Astro.props;
+const pl = lang === 'pl';
+const name = pl ? 'Polityka redakcyjna' : 'Editorial policy';
+---
+<PageLayout title={pl ? `Polityka redakcyjna ${SITE_NAMES.pl}: źródła i weryfikacja` : `${SITE_NAMES.en} editorial policy: sources and checks`} description={pl ? 'Skąd pochodzą dane o nasłonecznieniu, ceny RCE i RCEm, taryfy i kwoty dotacji, jak często je sprawdzamy, kto za nie odpowiada i co się dzieje, gdy liczba jest błędna.' : 'Where irradiation data, RCE and RCEm prices, tariffs and grant amounts come from, how often we check them, who is responsible and what happens when a figure is wrong.'} lang={lang} noindex={true} breadcrumbs={[{ label: name }]} showAuthor={false}>
+  <div class="prose prose-slate max-w-none">
+  {pl ? (<>
+    <h1>Polityka redakcyjna i poprawki</h1>
+    <p>Kto wydaje kilkadziesiąt tysięcy złotych na instalację po lekturze tego serwisu, polega na naszych liczbach. Oto skąd pochodzi każda z nich i co się dzieje, gdy któraś jest błędna.</p>
+    <h2>Odpowiedzialność</h2><p>Za treści i kalkulatory odpowiada {AUTHOR_NAME}. Kontakt: <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.</p>
+    <h2>Tylko źródła pierwotne</h2>
+    <ul>
+      <li><strong>PVGIS Komisji Europejskiej</strong> (Wspólne Centrum Badawcze): nasłonecznienie i produkcja w każdej gminie;</li>
+      <li><strong>PSE</strong>: ceny RCEm i RCE;</li>
+      <li><strong>URE i taryfy w BIP URE</strong>: ceny prądu G11 i gazu, stawki dystrybucyjne;</li>
+      <li><strong>ISAP (Sejm)</strong>: ustawa o odnawialnych źródłach energii, rozporządzenia;</li>
+      <li><strong>NFOŚiGW</strong>: Czyste Powietrze, Mój Prąd, Przydomowe Magazyny Energii;</li>
+      <li><strong>GUS</strong>: średnie ceny węgla i prądu;</li>
+      <li><strong>EUR-Lex</strong>: rozporządzenia ekoprojektu dla pomp ciepła i kotłów.</li>
+    </ul>
+    <p>Strony sprzedawców, blogi instalatorów i inne kalkulatory nie są dla nas źródłem żadnej liczby.</p>
+    <h2>Kontrole przed każdą publikacją</h2><p>Testy automatyczne sprawdzają bilans energii, wycenę depozytu, limity zwrotu nadpłaty, progi i kwoty dotacji oraz koszty ogrzewania. Nieprawidłowa wartość blokuje publikację.</p>
+    <h2>Rytm aktualizacji</h2><p>Skrypt co miesiąc pobiera nowe RCEm i RCE z PSE. Taryfy i dotacje sprawdzamy przy każdej zmianie przepisów, a wszystkie teksty co najmniej co {REVIEW_CYCLE_MONTHS} miesięcy. To, co nie zostało jeszcze opublikowane, na przykład taryfy na 2027 r., oznaczamy jako „do publikacji” i nigdy nie liczymy jako pewnej wartości.</p>
+    <h2>Gdy liczba jest błędna</h2>
+    <ol><li>Sprawdzenie w źródle pierwotnym.</li><li>Poprawka w pliku danych albo w kalkulatorze oraz nowy test, który wychwyci ten błąd w przyszłości.</li><li>Nowa data na każdej stronie; istotna poprawka jest opisana na stronie, której dotyczy.</li></ol>
+    <h2>Niezależność</h2><p>Żadnych wynagrodzeń od producentów paneli, instalatorów, sprzedawców energii ani porównywarek. Żadnych rekomendacji produktów ani linków afiliacyjnych.</p>
+    <p>Zobacz też <a href={route('method', lang)}>metodologię</a>. Wersja: {LAST_UPDATED}.</p>
+  </>) : (<>
+    <h1>Editorial policy and corrections</h1>
+    <p>Anyone who spends tens of thousands of zloty on a system after reading this site relies on our figures. Here is where each one comes from and what happens when one is wrong.</p>
+    <h2>Responsibility</h2><p>{AUTHOR_NAME} is responsible for the content and calculators. Contact: <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.</p>
+    <h2>Primary sources only</h2>
+    <ul>
+      <li><strong>European Commission PVGIS</strong> (Joint Research Centre): irradiation and output in every municipality;</li>
+      <li><strong>PSE</strong>: RCEm and RCE prices;</li>
+      <li><strong>URE and tariffs in the URE public bulletin</strong>: G11 power and gas prices, distribution rates;</li>
+      <li><strong>ISAP (Sejm)</strong>: the Renewable Energy Act and regulations;</li>
+      <li><strong>NFOŚiGW</strong>: Czyste Powietrze, Mój Prąd, Przydomowe Magazyny Energii;</li>
+      <li><strong>Statistics Poland (GUS)</strong>: average coal and power prices;</li>
+      <li><strong>EUR-Lex</strong>: ecodesign regulations for heat pumps and boilers.</li>
+    </ul>
+    <p>Seller pages, installer blogs and other calculators are never a source for any figure.</p>
+    <h2>Checks before every publication</h2><p>Automated tests check the energy balance, deposit valuation, refund caps, grant thresholds and amounts, and heating costs. An abnormal value blocks publication.</p>
+    <h2>Update rhythm</h2><p>A script downloads new RCEm and RCE prices from PSE every month. Tariffs and grants are checked whenever the rules change, and all texts at least every {REVIEW_CYCLE_MONTHS} months. Anything not yet published, such as 2027 tariffs, is marked “to be published” and never computed as a certain value.</p>
+    <h2>When a figure is wrong</h2>
+    <ol><li>Check against the primary source.</li><li>Fix in the data file or calculator, plus a new test that will catch the error in future.</li><li>New date on every page; a material correction is noted on the page concerned.</li></ol>
+    <h2>Independence</h2><p>No payments from panel makers, installers, energy sellers or comparison sites. No product recommendations and no affiliate links.</p>
+    <p>See also the <a href={route('method', lang)}>method</a>. Version: {LAST_UPDATED}.</p>
+  </>)}
+  </div>
+</PageLayout>

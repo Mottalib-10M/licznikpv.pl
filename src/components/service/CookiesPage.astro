@@ -1,0 +1,52 @@
+---
+/** Cookies (pl, en), noindex. Napisana ręcznie na wzór gen-legal-pages.py. */
+import PageLayout from '../../layouts/PageLayout.astro';
+import { CLARITY_ID, CONTACT_EMAIL, GA4_ID, LAST_UPDATED, SITE_NAMES } from '../../data/site-config';
+import { route, type Locale } from '../../i18n/routes';
+interface Props { lang: Locale }
+const { lang } = Astro.props;
+const pl = lang === 'pl';
+const G = GA4_ID.replace('G-', '');
+const title = `Cookies – ${SITE_NAMES[lang]}`;
+const description = pl
+  ? (GA4_ID ? 'Tylko pliki cookie pomiaru ruchu Google Analytics: nazwy, cel, ważność najwyżej 13 miesięcy, dostawca i jak się sprzeciwić.' : 'Serwis nie zapisuje plików cookie: to, co wpisujesz, zostaje w Twojej przeglądarce i nic nie jest zapisywane na Twoim urządzeniu.')
+  : (GA4_ID ? 'Only Google Analytics audience measurement cookies: names, purpose, lifetime of at most 13 months, provider and how to object.' : 'The site sets no cookies: what you type stays in your browser and nothing is stored on your device.');
+---
+<PageLayout title={title} description={description} lang={lang} noindex={true} breadcrumbs={[{ label: 'Cookies' }]} showAuthor={false}>
+  <div class="prose prose-slate max-w-none">
+    <h1>Cookies</h1>
+    {pl ? (<>
+      {GA4_ID ? (<>
+      <p>Serwis zapisuje tylko pliki cookie pomiaru ruchu Google Analytics: żadnych plików cookie reklamowych ani portali społecznościowych. Szczegóły w <a href={route('privacy', lang)}>polityce prywatności</a>.</p>
+      <h2>Zapisywane pliki cookie</h2>
+      <table><thead><tr><th>Nazwa</th><th>Dostawca</th><th>Cel</th><th>Ważność</th></tr></thead><tbody>
+      <tr><td><code>_ga</code></td><td>Google Analytics</td><td>Odróżnianie odwiedzających losowym identyfikatorem</td><td>najwyżej 13 miesięcy (390 dni)</td></tr>
+      <tr><td><code>_ga_{G}</code></td><td>Google Analytics</td><td>Przechowywanie stanu wizyty</td><td>najwyżej 13 miesięcy (390 dni)</td></tr>
+      </tbody></table>
+      <p>Ważność nie odnawia się przy każdej wizycie. Google Analytics 4 nie zapisuje adresu IP. Brak reklam. Dostawca: Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, Irlandia. Podstawa prawna: prawnie uzasadniony interes (art. 6 ust. 1 lit. f RODO).</p>
+      <h2>Jak się sprzeciwić</h2>
+      <p>Zablokuj lub usuń pliki cookie w ustawieniach przeglądarki albo zainstaluj <a href="https://tools.google.com/dlpage/gaoptout" rel="nofollow noopener" target="_blank">dodatek wyłączający Google Analytics</a>. Serwis i kalkulatory działają tak samo.</p>
+      </>) : (<p>Serwis <strong>nie zapisuje plików cookie</strong>. Szczegóły przetwarzania danych są w <a href={route('privacy', lang)}>polityce prywatności</a>.</p>)}
+      {CLARITY_ID && (<><h2>Microsoft Clarity bez plików cookie</h2><p>Stabilność stron sprawdzamy narzędziem Microsoft Clarity w trybie bez plików cookie: jednorazowy identyfikator dla każdej odsłony, treść i wpisane dane maskowane. Zablokowanie domeny <code>clarity.ms</code> je wyłącza.</p></>)}
+      <h2>To, co wpisujesz</h2>
+      <p>Obliczenia odbywają się w Twojej przeglądarce: to, co wpisujesz, nie trafia na żaden serwer i znika po zamknięciu strony.</p>
+      <p>Pytania: <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>. Ostatnia aktualizacja: {LAST_UPDATED}.</p>
+    </>) : (<>
+      {GA4_ID ? (<>
+      <p>The site sets only Google Analytics audience measurement cookies: no advertising or social network cookies. Details are in the <a href={route('privacy', lang)}>privacy policy</a>.</p>
+      <h2>Cookies set</h2>
+      <table><thead><tr><th>Name</th><th>Provider</th><th>Purpose</th><th>Lifetime</th></tr></thead><tbody>
+      <tr><td><code>_ga</code></td><td>Google Analytics</td><td>Telling visitors apart with a random identifier</td><td>at most 13 months (390 days)</td></tr>
+      <tr><td><code>_ga_{G}</code></td><td>Google Analytics</td><td>Keeping the state of the visit</td><td>at most 13 months (390 days)</td></tr>
+      </tbody></table>
+      <p>The lifetime is not renewed on each visit. Google Analytics 4 does not log IP addresses. No advertising. Provider: Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, Ireland. Legal basis: legitimate interest (Article 6(1)(f) GDPR).</p>
+      <h2>How to object</h2>
+      <p>Block or delete cookies in your browser settings, or install the <a href="https://tools.google.com/dlpage/gaoptout" rel="nofollow noopener" target="_blank">Google Analytics opt-out add-on</a>. The site and calculators work the same.</p>
+      </>) : (<p>The site <strong>sets no cookies</strong>. Details of data processing are in the <a href={route('privacy', lang)}>privacy policy</a>.</p>)}
+      {CLARITY_ID && (<><h2>Microsoft Clarity without cookies</h2><p>Page stability is checked with Microsoft Clarity in cookieless mode: a throwaway identifier per page view, content and inputs masked. Blocking <code>clarity.ms</code> stops it.</p></>)}
+      <h2>What you type</h2>
+      <p>The calculations run in your browser: what you enter is not sent to any server and disappears when you close the page.</p>
+      <p>Questions: <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>. Last updated: {LAST_UPDATED}.</p>
+    </>)}
+  </div>
+</PageLayout>

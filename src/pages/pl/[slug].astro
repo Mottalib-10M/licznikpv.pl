@@ -1,0 +1,9 @@
+---
+/** Strony z src/content/pages/ (pl) : jeden plik = jedna strona (CONTRIBUTING-STRONY.md). */
+import ContentPage from '../../components/ContentPage.astro';
+import { PAGES } from '../../lib/pages';
+import type { PageDef } from '../../lib/page-types';
+export function getStaticPaths() { return PAGES.map((page) => ({ params: { slug: page.pl.slug }, props: { page } })); }
+const { page } = Astro.props as { page: PageDef };
+---
+<ContentPage page={page} lang="pl" />

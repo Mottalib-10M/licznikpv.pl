@@ -1,0 +1,52 @@
+---
+/** Nota prawna / Legal notice (pl, en), noindex. Napisana ręcznie (gen-legal-pages.py nie obsługuje polskiego). */
+import PageLayout from '../../layouts/PageLayout.astro';
+import LegalIdentity from '../LegalIdentity.astro';
+import { LEGAL } from '../../data/site-config';
+import { AUTHOR_NAME, CLARITY_ID, CONTACT_EMAIL, GA4_ID, LAST_UPDATED, SITE_URL } from '../../data/site-config';
+import { route, type Locale } from '../../i18n/routes';
+interface Props { lang: Locale }
+const { lang } = Astro.props;
+const pl = lang === 'pl';
+const name = pl ? 'Nota prawna' : 'Legal notice';
+---
+<PageLayout title={pl ? 'Nota prawna: wydawca i hosting kalkulatora fotowoltaiki' : 'Legal notice: publisher and hosting of the solar calculator'} description={pl ? 'Nota prawna: kto wydaje kalkulator fotowoltaiki dla każdej gminy, kto za niego odpowiada i kto go hostuje; cel serwisu, odpowiedzialność, osadzanie i dane osobowe.' : 'Legal notice: who publishes the solar calculator for every Polish gmina, who is responsible and who hosts it; the purpose of the site, liability, embedding and personal data.'} lang={lang} noindex={true} breadcrumbs={[{ label: name }]} showAuthor={false}>
+  <div class="prose prose-slate max-w-none">
+    <h1>{name}</h1>
+    {pl ? (<>
+      <p>Informacje o wydawcy serwisu {SITE_URL}.</p>
+      <h2>Wydawca</h2>
+      <LegalIdentity lang={lang} />
+      <h2>Odpowiedzialny za treść</h2>
+      <p>{AUTHOR_NAME}, adres jak wyżej, e-mail <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.</p>
+      <h2>Hosting</h2>
+      <p>Strony kalkulatora są statyczne i serwuje je {LEGAL.hosting.name}, z siedzibą pod adresem {LEGAL.hosting.address} (<a href={LEGAL.hosting.url} rel="nofollow noopener">{LEGAL.hosting.url.replace('https://', '')}</a>). Dostawca nie ma wpływu na treść ani obliczenia serwisu.</p>
+      <h2>Cel serwisu</h2>
+      <p>Serwis szacuje produkcję i opłacalność domowej instalacji fotowoltaicznej, wartość depozytu prosumenckiego, koszt ogrzewania i wysokość dotacji na podstawie danych PVGIS Komisji Europejskiej, cen PSE, taryf zatwierdzonych przez Prezesa URE i dokumentów NFOŚiGW. Nie jest ofertą instalatora, sprzedawcy energii, operatora sieci ani organu publicznego i nie stanowi doradztwa podatkowego, technicznego ani prawnego. Kroki obliczeń opisuje strona <a href={route('method', lang)}>metodologia</a>.</p>
+      <h2>Odpowiedzialność</h2>
+      <p>Wartości są sprawdzane automatycznie przed każdą publikacją i aktualizowane, gdy zmienia się źródło; nie gwarantujemy produkcji ani oszczędności konkretnej instalacji ani przyznania dotacji. Za strony podmiotów trzecich, do których prowadzą linki, odpowiadają ich wydawcy. Błędy można zgłaszać przez stronę <a href={route('contact', lang)}>kontakt</a>.</p>
+      <h2>Osadzanie</h2>
+      <p>Kalkulator można bezpłatnie osadzić za pomocą iframe, jeśli link do źródła pozostaje widoczny: <a href={route('widget', lang)}>kalkulator na Twoją stronę</a>.</p>
+      <h2>Dane osobowe i cookies</h2>
+      {GA4_ID ? (<p>To, co wpisujesz w kalkulatorach, zostaje w Twojej przeglądarce. Serwis zapisuje pliki cookie pomiaru ruchu Google Analytics (<code>_ga</code>, <code>_ga_{GA4_ID.replace('G-', '')}</code>, najwyżej 13 miesięcy), bez reklam{CLARITY_ID && '; stabilność sprawdzamy narzędziem Microsoft Clarity bez plików cookie'}. Szczegóły: <a href={route('privacy', lang)}>polityka prywatności</a> i strona <a href={route('cookies', lang)}>cookies</a>.</p>) : (<p>To, co wpisujesz w kalkulatorach, zostaje w Twojej przeglądarce, a serwis nie zapisuje plików cookie{CLARITY_ID && '; stabilność sprawdzamy anonimowo narzędziem Microsoft Clarity bez plików cookie'}. Zobacz <a href={route('privacy', lang)}>politykę prywatności</a> i stronę <a href={route('cookies', lang)}>cookies</a>.</p>)}
+      <p>Wersja: {LAST_UPDATED}.</p>
+    </>) : (<>
+      <p>Information about the publisher of {SITE_URL}.</p>
+      <h2>Publisher</h2>
+      <LegalIdentity lang={lang} />
+      <h2>Responsible for content</h2>
+      <p>{AUTHOR_NAME}, address as above, email <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.</p>
+      <h2>Hosting</h2>
+      <LegalIdentity mode="hosting" lang={lang} />
+      <h2>Purpose of the site</h2>
+      <p>The site estimates the output and return of a home solar system, the value of the prosumer deposit, heating costs and grant amounts from European Commission PVGIS data, PSE prices, tariffs approved by the President of URE and NFOŚiGW documents. It is not an offer from an installer, energy seller, grid operator or public authority, and it is not tax, technical or legal advice. The <a href={route('method', lang)}>method</a> page describes the calculation steps.</p>
+      <h2>Liability</h2>
+      <p>Values are checked automatically before every publication and updated when a source changes; we do not guarantee the output or saving of a specific system or the award of a grant. Third-party sites we link to are the responsibility of their publishers. Report errors via the <a href={route('contact', lang)}>contact</a> page.</p>
+      <h2>Embedding</h2>
+      <p>The calculator may be embedded free of charge with an iframe, as long as the source link stays visible: <a href={route('widget', lang)}>embed the calculator</a>.</p>
+      <h2>Personal data and cookies</h2>
+      {GA4_ID ? (<p>What you type into the calculators stays in your browser. The site sets Google Analytics audience measurement cookies (<code>_ga</code>, <code>_ga_{GA4_ID.replace('G-', '')}</code>, at most 13 months), with no advertising{CLARITY_ID && '; stability is checked with Microsoft Clarity without cookies'}. Details: <a href={route('privacy', lang)}>privacy policy</a> and the <a href={route('cookies', lang)}>cookies</a> page.</p>) : (<p>What you type into the calculators stays in your browser, and the site sets no cookies{CLARITY_ID && '; stability is checked anonymously with Microsoft Clarity without cookies'}. See the <a href={route('privacy', lang)}>privacy policy</a> and the <a href={route('cookies', lang)}>cookies</a> page.</p>)}
+      <p>Version: {LAST_UPDATED}.</p>
+    </>)}
+  </div>
+</PageLayout>

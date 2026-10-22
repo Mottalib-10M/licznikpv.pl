@@ -1,0 +1,20 @@
+{
+ "accent": "#A61B29",
+ "symbol": "PV",
+ "variants": [
+  {
+   "file": "og-pl.png",
+   "title": "Fotowoltaika w Twojej gminie\nile da i kiedy się zwróci",
+   "subtitle": "PVGIS · net-billing RCE · magazyn energii · pompa ciepła · Czyste Powietrze",
+   "badge": "Bez formularza i bez telefonu",
+   "brand": "Bilans PV"
+  },
+  {
+   "file": "og-en.png",
+   "title": "Solar panels in Poland\noutput and payback by gmina",
+   "subtitle": "PVGIS · RCE net-billing · home battery · heat pump · Czyste Powietrze",
+   "badge": "No form, no phone call",
+   "brand": "Bilans PV"
+  }
+ ]
+}

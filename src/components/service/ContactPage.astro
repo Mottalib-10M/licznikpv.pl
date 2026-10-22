@@ -1,0 +1,36 @@
+---
+/** Kontakt / Contact (pl, en), noindex. */
+import PageLayout from '../../layouts/PageLayout.astro';
+import { CONTACT_EMAIL, SITE_NAMES } from '../../data/site-config';
+import { route, type Locale } from '../../i18n/routes';
+import { contactPageSchema } from '../../lib/seo';
+interface Props { lang: Locale }
+const { lang } = Astro.props;
+const pl = lang === 'pl';
+const name = pl ? 'Kontakt' : 'Contact';
+const description = pl
+  ? 'Napisz do nas, jeśli cena PSE albo taryfa URE jest nieaktualna, jeśli Twoja instalacja produkuje inaczej niż kalkulator albo jeśli chcesz osadzić kalkulator na swojej stronie.'
+  : 'Write to us if a PSE price or URE tariff is out of date, if your system produces differently from the calculator, or if you want to embed the calculator on your website.';
+---
+<PageLayout title={`${name} ${SITE_NAMES[lang]}: ${pl ? 'zgłoś błąd, osadź kalkulator' : 'report an error, embed the calculator'}`} description={description} lang={lang} noindex={true} jsonLd={[contactPageSchema({ name, description, path: route('contact', lang), lang })]} breadcrumbs={[{ label: name }]} showAuthor={false}>
+  <div class="prose prose-slate max-w-none">
+    <h1>{name}</h1>
+    {pl ? (<>
+      <p>E-mail: <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>. Zwykle odpowiadamy w ciągu tygodnia.</p>
+      <h2>Twoja instalacja produkuje inaczej</h2>
+      <p>Wyślij link do wyniku z kalkulatora i roczną produkcję z falownika albo z licznika, najlepiej z prawdziwą stroną dachu i kątem nachylenia. Najczęstsze przyczyny różnic to cień po południu, wyłączenia falownika przy wysokim napięciu w sieci albo mniej słoneczny rok. Jeśli błąd jest po naszej stronie, poprawimy go i dodamy przypadek do testów.</p>
+      <h2>Osadzenie kalkulatora</h2>
+      <p>Gminy, punkty doradztwa energetycznego, stowarzyszenia konsumentów i lokalne redakcje mogą osadzić kalkulator bezpłatnie: <a href={route('widget', lang)}>kalkulator na Twoją stronę</a>.</p>
+      <h2>Czego nie oferujemy</h2>
+      <p>Żadnych wycen, kontaktu z instalatorami, wizyt na miejscu ani porad podatkowych. W sprawie rozliczenia zwróć się do swojego sprzedawcy prądu lub operatora sieci, a w sprawie dotacji do wojewódzkiego funduszu ochrony środowiska albo gminy.</p>
+    </>) : (<>
+      <p>Email: <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>. We usually reply within a week.</p>
+      <h2>Your system produces differently</h2>
+      <p>Send the link to your calculator result and the yearly output from your inverter or meter, ideally with the real roof direction and tilt. The most common causes of a gap are afternoon shade, inverter cut-outs at high grid voltage or a less sunny year. If the error is ours, we fix it and add the case to our tests.</p>
+      <h2>Embedding the calculator</h2>
+      <p>Municipalities, energy advice desks, consumer associations and local newsrooms can embed the calculator free of charge: <a href={route('widget', lang)}>embed the calculator</a>.</p>
+      <h2>What we do not offer</h2>
+      <p>No quotes, no contact with installers, no site visits and no tax advice. For settlement questions contact your electricity seller or grid operator; for grants, the regional environmental fund or your municipality.</p>
+    </>)}
+  </div>
+</PageLayout>

@@ -1,0 +1,55 @@
+---
+/** O nas / About (pl, en) : kto wydaje serwis, co robi inaczej, czym nie jest. */
+import PageLayout from '../../layouts/PageLayout.astro';
+import { YEAR, LAST_UPDATED, AUTHOR_NAME, CONTACT_EMAIL, AUTHOR_ROLE, SITE_NAMES } from '../../data/site-config';
+import { route, type Locale } from '../../i18n/routes';
+import { personSchema, organizationSchema, breadcrumbSchema, profilePageSchema } from '../../lib/seo';
+import { helpers } from '../../lib/helpers';
+interface Props { lang: Locale }
+const { lang } = Astro.props;
+const pl = lang === 'pl';
+const h = helpers(lang);
+const N = h.M.MODEL.national;
+const name = pl ? 'O nas' : 'About';
+const title = pl ? 'O nas: kto wydaje kalkulator fotowoltaiki i skąd są dane' : 'Polish solar calculator: publisher, data sources and checks';
+const description = pl
+  ? 'Kto wydaje kalkulator fotowoltaiki i pompy ciepła dla każdej gminy, skąd są produkcja, ceny PSE, taryfy i dotacje, jak sprawdzamy obliczenia i kim nie jesteśmy.'
+  : 'Who publishes the solar and heat pump calculator for every Polish gmina, where output, PSE prices, tariffs and grants come from and how we check the maths.';
+---
+<PageLayout title={title} description={description} lang={lang} jsonLd={[personSchema(lang), organizationSchema(lang), profilePageSchema({ path: route('about', lang), lang }), breadcrumbSchema([{ name: pl ? 'Start' : 'Home', path: route('home', lang) }, { name, path: route('about', lang) }])]} breadcrumbs={[{ label: name }]}>
+  <header class="mb-6"><h1 class="text-3xl font-bold text-navy-900 md:text-4xl">{name}</h1></header>
+  <div class="prose prose-slate max-w-none">
+    <div class="not-prose mb-6"><p class="text-lg font-semibold text-navy-900">{AUTHOR_NAME}</p><p class="text-navy-700">{AUTHOR_ROLE[lang]}</p></div>
+    {pl ? (<>
+      <p>{SITE_NAMES.pl} wydaje firma Radif Partners. Ta strona liczy, ile prądu da dach w Twojej gminie, ile oszczędzisz w net-billingu, ile wart jest depozyt prosumencki, ile kosztuje ogrzewanie pompą ciepła, gazem i węglem oraz jaką dotację dostaniesz z Czystego Powietrza i programu Przydomowe Magazyny Energii.</p>
+      <h2>Co liczy ten serwis</h2>
+      <p>Serwis liczy produkcję z PVGIS osobno dla {h.num(N.gminas)} gmin, bilansuje energię godzina po godzinie, tak jak każe ustawa, wycenia nadwyżkę po prawdziwych cenach RCE i RCEm z PSE z ostatnich 12 miesięcy, pokazuje, ile depozytu przepada, i podaje wynik od razu, bez formularza, telefonu i wyceny od instalatora. Dotacje przepisujemy z dokumentów NFOŚiGW z datą, łącznie ze zmianami w Czystym Powietrzu z 20 lipca 2026 r.</p>
+      <h2>Jak sprawdzamy</h2>
+      <p>Przed każdą publikacją uruchamiają się testy automatyczne: bilans energii każdego miesiąca, wycena depozytu, limity zwrotu nadpłaty, progi i kwoty dotacji. Skąd bierze się każda liczba, opisuje strona <a href={route('method', lang)}>metodologia</a>.</p>
+      <h2>Czym nie jesteśmy</h2>
+      <p>Nie jesteśmy instalatorem, sprzedawcą prądu, operatorem sieci, PSE, URE ani NFOŚiGW i nie wypowiadamy się w ich imieniu. Nie sprzedajemy paneli, magazynów ani pomp ciepła, nie przekazujemy nikomu zapytań i nie bierzemy pieniędzy za polecenia.</p>
+      <h2>Finansowanie i dane</h2>
+      <p>Kalkulatory są bezpłatne i działają bez konta. Gmina, zużycie i ceny, które wpisujesz, zostają w Twojej przeglądarce. Jeśli serwis kiedyś pokaże reklamy, nigdy nie znajdą się nad kalkulatorem.</p>
+      <h2>Po angielsku</h2>
+      <p>Każda strona ma wersję angielską dla osób mieszkających w Polsce, które dopiero poznają polskie pojęcia: net-billing, depozyt prosumencki, RCE i Czyste Powietrze są wyjaśnione, a kwoty zostają w złotych.</p>
+      <h2>Kontakt</h2>
+      <p>Liczba się nie zgadza, przepis się zmienił, Twoja instalacja produkuje inaczej? Napisz na <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>. Zobacz też <a href={route('editorial', lang)}>politykę redakcyjną</a> i <a href={route('terms', lang)}>notę prawną</a>.</p>
+      <p class="text-sm text-navy-600">Dane na {YEAR} r., sprawdzone <time datetime={LAST_UPDATED}>{h.date(LAST_UPDATED)}</time>.</p>
+    </>) : (<>
+      <p>{SITE_NAMES.en} is published by Radif Partners. This site gives the output of a roof in your municipality, the saving under net-billing, the value of the prosumer deposit, the cost of heating with a heat pump, gas or coal, and the grant you can get from Czyste Powietrze and the Przydomowe Magazyny Energii programme.</p>
+      <h2>What this site calculates</h2>
+      <p>The site computes PVGIS output separately for {h.num(N.gminas)} municipalities, nets energy hour by hour as the law requires, values surplus at the real PSE RCE and RCEm prices of the last 12 months, shows how much deposit is lost, and gives the result at once, with no form, phone call or installer quote. Grants are taken from NFOŚiGW documents with their dates, including the Czyste Powietrze changes of 20 July 2026.</p>
+      <h2>How we check</h2>
+      <p>Before every publication automated tests run: the energy balance of every month, deposit valuation, refund caps, grant thresholds and amounts. The <a href={route('method', lang)}>method</a> page explains where every figure comes from.</p>
+      <h2>What we are not</h2>
+      <p>We are not an installer, an electricity seller, a grid operator, PSE, URE or NFOŚiGW, and we do not speak for them. We sell no panels, batteries or heat pumps, pass on no enquiries and take no money for recommendations.</p>
+      <h2>Funding and data</h2>
+      <p>The calculators are free and need no account. The municipality, use and prices you enter stay in your browser. If the site ever shows advertising, it will never sit above a calculator.</p>
+      <h2>In Polish</h2>
+      <p>Every page also exists in Polish, the original language of the site. The English version is written for people living in Poland who are just learning the Polish terms: net-billing, the prosumer deposit, RCE and Czyste Powietrze are explained, and amounts stay in zloty.</p>
+      <h2>Contact</h2>
+      <p>A figure looks wrong, a rule has changed, your system produces differently? Write to <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>. See also the <a href={route('editorial', lang)}>editorial policy</a> and the <a href={route('terms', lang)}>legal notice</a>.</p>
+      <p class="text-sm text-navy-600">{YEAR} data, checked on <time datetime={LAST_UPDATED}>{h.date(LAST_UPDATED)}</time>.</p>
+    </>)}
+  </div>
+</PageLayout>

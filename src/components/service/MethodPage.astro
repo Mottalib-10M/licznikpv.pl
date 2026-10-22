@@ -1,0 +1,70 @@
+---
+/** Metodologia (pl, en) : jak liczy każdy kalkulator, skąd są dane i czego model nie wie. Liczby z silnika. */
+import PageLayout from '../../layouts/PageLayout.astro';
+import { route, type Locale } from '../../i18n/routes';
+import { breadcrumbSchema, webPageSchema } from '../../lib/seo';
+import { helpers } from '../../lib/helpers';
+import { LAST_UPDATED } from '../../data/site-config';
+interface Props { lang: Locale }
+const { lang } = Astro.props;
+const h = helpers(lang);
+const pl = lang === 'pl';
+const { M, P } = h;
+const N = M.MODEL.national, meta = M.MODEL.meta;
+const title = pl ? 'Metodologia kalkulatora fotowoltaiki: dane PVGIS, PSE i URE' : 'Solar calculator method: PVGIS, PSE and URE data explained';
+const description = pl
+  ? 'Jak liczymy produkcję z PVGIS, autokonsumpcję godzina po godzinie, depozyt po RCE i RCEm, koszt ogrzewania i dotacje, skąd są dane i czego model nie uwzględnia.'
+  : 'How we compute PVGIS output, hourly self-consumption, the RCE and RCEm deposit, heating costs and grants, where the data come from and what the model omits.';
+const name = pl ? 'Metodologia' : 'Method';
+const S = (k: Parameters<typeof h.src>[0]) => h.src(k);
+---
+<PageLayout title={title} description={description} lang={lang} jsonLd={[webPageSchema({ name, description, path: route('method', lang), lang }), breadcrumbSchema([{ name: pl ? 'Start' : 'Home', path: route('home', lang) }, { name, path: route('method', lang) }])]} breadcrumbs={[{ label: name }]}>
+  <header class="mb-6"><h1 class="text-3xl font-bold text-navy-900 md:text-4xl">{pl ? 'Jak liczymy' : 'How we calculate'}</h1>
+  <p class="mt-3 text-lg text-navy-700">{pl ? 'Każda liczba w serwisie pochodzi z jednego silnika obliczeniowego i z plików danych z datą. Oto kolejne kroki i ich źródła.' : 'Every figure on the site comes from one calculation engine and from dated data files. Here are the steps and their sources.'}</p></header>
+  <div class="prose prose-slate max-w-none">
+  {pl ? (<>
+    <h2>1. Produkcja: PVGIS dla każdej gminy</h2>
+    <p>Dla środka każdej z {h.num(N.gminas)} gmin i {h.num(N.powiats)} powiatów pobraliśmy z API PVGIS 5.3 ({meta.db}) roczny uzysk instalacji nachylonej pod kątem {meta.angle}° na południe, ze stratami systemu {meta.loss} %. Wynik waha się od {h.num(N.min)} kWh z 1 kWp ({N.minN}) do {h.num(N.max)} kWh ({N.maxN}), średnio {h.num(N.mean)} kWh. Uzysk rozkładamy na miesiące według kształtu województwa, a inną stronę dachu i inne nachylenie uwzględniamy współczynnikami PVGIS policzonymi dla Warszawy. Źródło: <Fragment set:html={S('pvgis')} />.</p>
+    <h2>2. Autokonsumpcja godzina po godzinie</h2>
+    <p>Ustawa o OZE każe bilansować pobór i oddanie energii w każdej godzinie (art. 4 ust. 2b). Dla każdego miesiąca budujemy więc dobę przeciętną: produkcję rozkładamy na 24 godziny według kształtu godzinowego PVGIS, zużycie według wybranego profilu (w dzień poza domem 30 % zużycia doby w godzinach 8–18, równomiernie 10/24, praca z domu 55 %). Autokonsumpcja to suma mniejszej z dwóch wartości w każdej godzinie. Profile są założeniem modelu, nie statystyką, i dlatego użytkownik je wybiera.</p>
+    <h2>3. Magazyn energii</h2>
+    <p>Nadwyżka dnia ładuje magazyn do jego pojemności użytkowej, ale tylko do tego, co dom zużyje wieczorem, w nocy i rano, a rozładowanie uwzględnia sprawność cyklu 90 %. Model nie zna zachowania konkretnego falownika ani strategii ładowania z sieci.</p>
+    <h2>4. Depozyt, zwrot nadpłaty i oszczędność</h2>
+    <p>Energię oddaną w każdym miesiącu wyceniamy po RCEm z ostatnich 12 opublikowanych miesięcy, a w rozliczeniu po RCE dodajemy premię wynikającą z liczenia ujemnych cen godzinowych jako zero (art. 4b ust. 2). Wartość mnożymy przez {h.num(P.netBilling.depositFactor, 2)} (art. 4c ust. 4). Depozyt pokrywa tylko część „energia” rachunku za energię pobraną (art. 4c ust. 2–3). Niewykorzystana reszta wraca jako nadpłata najwyżej do {h.pct(P.netBilling.refundCapRCEm)} (RCEm) albo {h.pct(P.netBilling.refundCapRCE)} (RCE) wartości oddanej energii, a reszta przepada (art. 4 ust. 11a). Oszczędność to różnica rachunku zmiennego bez instalacji i z instalacją. Źródła: <Fragment set:html={S('ozeAct')} />, <Fragment set:html={S('rcem')} />, <Fragment set:html={S('rceApi')} />.</p>
+    <h2>5. Ceny prądu</h2>
+    <p>Taryfa G11 na 2026 r. zatwierdzona przez Prezesa URE: energia {h.num(P.elec.energyNet, 4)} zł/kWh netto, dystrybucja zmienna {h.num(P.elec.distVarNet, 4)} zł/kWh netto według taryfy Energa-Operator jako przykładu, opłaty jakościowa, OZE i kogeneracyjna, VAT {h.pct(P.vat)}. Razem około {h.zl(M.elecGross(), 2)} za kWh brutto. Opłat stałych nie liczymy, bo instalacja ich nie zmienia. Każde pole ceny da się nadpisać kwotą z własnego rachunku. Źródła: <Fragment set:html={S('ureTaryfy2026')} />, <Fragment set:html={S('energaOperator')} />.</p>
+    <h2>6. Zwrot inwestycji</h2>
+    <p>Lata zwrotu to cena minus dotacja, podzielone przez roczną oszczędność. Nie zakładamy wzrostu cen prądu ani spadku sprawności paneli, bo oba działają w przeciwnych kierunkach i nie znamy ich wielkości. Zamiast średniej ceny instalacji, której urzędowego źródła nie ma, pokazujemy cenę graniczną: ile instalacja może kosztować, żeby zwróciła się w danej liczbie lat.</p>
+    <h2>7. Koszt ogrzewania</h2>
+    <p>Zapotrzebowanie na ciepło to powierzchnia razy wskaźnik EU w kWh/m² rocznie, ten sam, którym program Czyste Powietrze dzieli domy na klasy. Pompa ciepła: ciepło podzielone przez SCOP; domyślny SCOP {h.num(M.scopMin(true), 1)} to minimalna sprawność sezonowa z rozporządzenia UE 813/2013 pomnożona przez współczynnik {h.num(P.heatPump.cc, 1)}. Węgiel: {h.num(P.coal.mjPerKg)} MJ/kg, sprawność kotła {h.pct(P.coal.boilerEff)}, średnia cena GUS {h.zl(P.coal.pricePerTon2025)} za tonę w 2025 r. Gaz: taryfa myORLEN {h.num(P.gas.energyNet * 1000, 2)} zł/MWh netto, dystrybucja i opłata stała PSG dla grupy W-3.6, sprawność kotła {h.pct(P.gas.boilerEff)}. Pompa z fotowoltaiką: prąd pompy rozkładamy na październik–kwiecień proporcjonalnie do liczby dni i dodajemy do zużycia domu. Źródła: <Fragment set:html={S('eco813')} />, <Fragment set:html={S('gusCoal')} />, <Fragment set:html={S('myOrlen')} />, <Fragment set:html={S('psgTaryfa')} />.</p>
+    <h2>8. Dotacje</h2>
+    <p>Progi dochodowe i kwoty Czystego Powietrza przepisujemy z dokumentów NFOŚiGW po zmianach z 20 lipca 2026 r.; poziom najwyższy przyznajemy tylko domom powyżej 140 kWh/m². Dotacja do magazynu (PME część 2): {h.pct(P.pme.rate)} kosztów, najwyżej {h.zl(P.pme.perKwh)} za kWh i {h.zl(P.pme.capNetBilling)}, od {h.num(P.pme.minKwh)} kWh, przy cenie do {h.zl(P.pme.priceCapPerKwh)} za kWh. Źródła: <Fragment set:html={S('cpNaCo')} />, <Fragment set:html={S('cpDlaKogo')} />, <Fragment set:html={S('pmeProgram')} />.</p>
+    <h2>9. Aktualizacja danych</h2>
+    <p>Skrypt aktualizacji pobiera co miesiąc nowe RCEm z tabeli PSE i ceny RCE z API raportów PSE, przelicza premię za ujemne ceny i zapisuje okno ostatnich 12 miesięcy. Ostatnie pobranie: {h.date(M.PRICES.retrieved_at)}, ostatnia RCEm: {h.month(M.LAST_RCEM_KEY)}. Taryfy, progi i kwoty dotacji sprawdzamy przy każdej zmianie przepisów i co najmniej raz w roku. Przed każdą publikacją testy automatyczne sprawdzają bilans energii, depozyt, limity zwrotu i dotacje.</p>
+    <h2>10. Czego model nie wie</h2>
+    <p>Nie zna zacienienia Twojego dachu, stanu instalacji elektrycznej, ograniczeń mocy przyłączeniowej ani wyłączeń falownika przy wysokim napięciu w sieci. Nie zna Twojej umowy ze sprzedawcą, jeśli cena jest inna niż taryfowa, ani przyszłych cen. Liczy dla środka gminy, a nie dla Twojej działki. Wynik jest szacunkiem z jawną metodą, a nie ofertą, ekspertyzą ani decyzją urzędu. Uwagi i błędy zgłaszaj przez stronę <a href={route('contact', lang)}>kontakt</a>.</p>
+  </>) : (<>
+    <h2>1. Output: PVGIS for every municipality</h2>
+    <p>For the centre of each of {h.num(N.gminas)} municipalities and {h.num(N.powiats)} counties we downloaded from the PVGIS 5.3 API ({meta.db}) the yearly yield of a system tilted at {meta.angle}° facing south, with {meta.loss}% system losses. The result ranges from {h.num(N.min)} kWh per kWp ({N.minN}) to {h.num(N.max)} kWh ({N.maxN}), averaging {h.num(N.mean)} kWh. We spread the yield over the months using the regional profile, and account for another roof direction or tilt with PVGIS factors computed for Warsaw. Source: <Fragment set:html={S('pvgis')} />.</p>
+    <h2>2. Hour-by-hour self-consumption</h2>
+    <p>The Renewable Energy Act requires import and export to be netted in each hour (Art. 4(2b)). For each month we therefore build an average day: output spread over 24 hours using the PVGIS hourly profile, consumption using the chosen profile (out during the day: 30% of daily use between 8 a.m. and 6 p.m.; evenly: 10/24; home office: 55%). Self-consumption is the sum of the smaller of the two values in each hour. The profiles are model assumptions, not statistics, which is why the user chooses them.</p>
+    <h2>3. Home battery</h2>
+    <p>The day’s surplus charges the battery up to its usable capacity, but only up to what the house will use in the evening, at night and in the morning, and discharge allows for a 90% round-trip efficiency. The model does not know a specific inverter’s behaviour or any grid-charging strategy.</p>
+    <h2>4. Deposit, refund and saving</h2>
+    <p>Energy exported in each month is valued at RCEm over the last 12 published months, and for RCE settlement we add the gain from counting negative hourly prices as zero (Art. 4b(2)). The value is multiplied by {h.num(P.netBilling.depositFactor, 2)} (Art. 4c(4)). The deposit pays only the energy part of the bill for imported energy (Art. 4c(2)–(3)). The unused rest comes back as a refund up to {h.pct(P.netBilling.refundCapRCEm)} (RCEm) or {h.pct(P.netBilling.refundCapRCE)} (RCE) of the value of exported energy, and the rest is lost (Art. 4(11a)). The saving is the difference in the variable bill without and with the system. Sources: <Fragment set:html={S('ozeAct')} />, <Fragment set:html={S('rcem')} />, <Fragment set:html={S('rceApi')} />.</p>
+    <h2>5. Power prices</h2>
+    <p>The 2026 G11 tariff approved by the President of URE: energy PLN {h.num(P.elec.energyNet, 4)}/kWh net, variable distribution PLN {h.num(P.elec.distVarNet, 4)}/kWh net from the Energa-Operator tariff as an example, the quality, renewables and cogeneration charges, and {h.pct(P.vat)} VAT. In total about {h.zl(M.elecGross(), 2)} per kWh gross. We leave out fixed charges, which a solar system does not change. Every price field can be overwritten with the figure from your own bill. Sources: <Fragment set:html={S('ureTaryfy2026')} />, <Fragment set:html={S('energaOperator')} />.</p>
+    <h2>6. Payback</h2>
+    <p>Payback years are price minus grant, divided by the yearly saving. We assume neither rising power prices nor panel degradation, because they pull in opposite directions and their size is unknown. Instead of an average system price, for which there is no official source, we show a break-even price: how much the system may cost to pay back within a given number of years.</p>
+    <h2>7. Heating cost</h2>
+    <p>Heat demand is floor area times the EU index in kWh/m² a year, the same index Czyste Powietrze uses to class houses. Heat pump: heat divided by SCOP; the default SCOP of {h.num(M.scopMin(true), 1)} is the minimum seasonal efficiency from EU Regulation 813/2013 times a factor of {h.num(P.heatPump.cc, 1)}. Coal: {h.num(P.coal.mjPerKg)} MJ/kg, {h.pct(P.coal.boilerEff)} boiler efficiency, Statistics Poland average of {h.zl(P.coal.pricePerTon2025)} per tonne in 2025. Gas: myORLEN tariff PLN {h.num(P.gas.energyNet * 1000, 2)}/MWh net, PSG W-3.6 distribution and fixed charge, {h.pct(P.gas.boilerEff)} boiler efficiency. Heat pump with solar: the pump’s power is spread over October to April in proportion to the number of days and added to the house’s use. Sources: <Fragment set:html={S('eco813')} />, <Fragment set:html={S('gusCoal')} />, <Fragment set:html={S('myOrlen')} />, <Fragment set:html={S('psgTaryfa')} />.</p>
+    <h2>8. Grants</h2>
+    <p>Czyste Powietrze income thresholds and amounts are taken from NFOŚiGW documents after the changes of 20 July 2026; the highest level is granted only to houses above 140 kWh/m². Home battery grant (PME part 2): {h.pct(P.pme.rate)} of costs, at most {h.zl(P.pme.perKwh)} per kWh and {h.zl(P.pme.capNetBilling)}, from {h.num(P.pme.minKwh)} kWh, at a price of up to {h.zl(P.pme.priceCapPerKwh)} per kWh. Sources: <Fragment set:html={S('cpNaCo')} />, <Fragment set:html={S('cpDlaKogo')} />, <Fragment set:html={S('pmeProgram')} />.</p>
+    <h2>9. Data updates</h2>
+    <p>Every month the update script downloads the new RCEm from the PSE table and RCE prices from the PSE reports API, recomputes the negative-price gain and stores the window of the last 12 months. Last download: {h.date(M.PRICES.retrieved_at)}; latest RCEm: {h.month(M.LAST_RCEM_KEY)}. Tariffs, thresholds and grant amounts are checked whenever the rules change and at least once a year. Before every publication automated tests check the energy balance, the deposit, the refund caps and the grants.</p>
+    <h2>10. What the model does not know</h2>
+    <p>It does not know your roof’s shading, the state of your wiring, connection capacity limits or inverter cut-outs at high grid voltage. It does not know your contract with the seller if your price differs from the tariff, nor future prices. It calculates for the centre of the municipality, not your plot. The result is an estimate with an open method, not an offer, an expert opinion or an official decision. Report comments and errors via the <a href={route('contact', lang)}>contact</a> page.</p>
+  </>)}
+  <p class="text-sm text-navy-600">{pl ? 'Wersja metodologii' : 'Method version'}: <time datetime={LAST_UPDATED}>{h.date(LAST_UPDATED)}</time>.</p>
+  </div>
+</PageLayout>

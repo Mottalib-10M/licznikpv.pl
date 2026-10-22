@@ -1,0 +1,94 @@
+---
+/** Polityka prywatności / Privacy (pl, en), noindex. Napisana ręcznie na wzór gen-legal-pages.py (polski nie jest obsługiwany przez generator). */
+import PageLayout from '../../layouts/PageLayout.astro';
+import LegalIdentity from '../LegalIdentity.astro';
+import { CLARITY_ID, CONTACT_EMAIL, GA4_ID, LAST_UPDATED, LEGAL, SITE_NAMES, SITE_URL } from '../../data/site-config';
+import { route, type Locale } from '../../i18n/routes';
+interface Props { lang: Locale }
+const { lang } = Astro.props;
+const pl = lang === 'pl';
+const G = GA4_ID.replace('G-', '');
+const title = pl ? `Polityka prywatności – ${SITE_NAMES.pl}` : `Privacy policy – ${SITE_NAMES.en}`;
+const description = pl
+  ? (GA4_ID ? 'Pomiar ruchu Google Analytics z plikami cookie, bez reklam; wpisane dane zostają w przeglądarce; logi hostingu; Twoje prawa i organ nadzorczy.' : 'Wpisane dane zostają w Twojej przeglądarce, brak plików cookie, logi hostingu: jakie dane przetwarza serwis, Twoje prawa i organ nadzorczy, do którego możesz się zwrócić.')
+  : (GA4_ID ? 'Google Analytics audience measurement with cookies, no advertising; what you enter stays in your browser; hosting logs; your rights and the supervisory authority.' : 'What you enter stays in your browser, no cookies, hosting logs: what data the site processes, your rights and the supervisory authority you can turn to.');
+---
+<PageLayout title={title} description={description} lang={lang} noindex={true} breadcrumbs={[{ label: pl ? 'Prywatność' : 'Privacy' }]} showAuthor={false}>
+  <div class="prose prose-slate max-w-none">
+  {pl ? (<>
+    <h1>Polityka prywatności</h1>
+    <p>Ta strona opisuje przetwarzanie danych osobowych związane z korzystaniem z {SITE_URL}, zgodnie z art. 12–14 rozporządzenia (UE) 2016/679 (RODO).</p>
+    <h2>1. Administrator danych</h2>
+    <LegalIdentity lang={lang} />
+    <p>W każdej sprawie dotyczącej Twoich danych: <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>. Nie wyznaczono inspektora ochrony danych, bo nie zachodzą warunki z art. 37 RODO.</p>
+    <h2>2. To, co wpisujesz, zostaje w Twojej przeglądarce</h2>
+    <p>Obliczenia odbywają się w Twojej przeglądarce. Gmina, moc, zużycie i kwoty, które wpisujesz, <strong>nie są wysyłane na żaden serwer</strong>, nie są zapisywane i nie są łączone z żadnym identyfikatorem. Serwis nie prosi o konto, imię ani adres e-mail. Link do udostępnienia wyniku zawiera Twoje dane w adresie strony: wysyłaj go tylko tym, komu chcesz. Do podpowiadania gmin przeglądarka pobiera z naszego serwisu pełną listę gmin; to, co wpisujesz, nie jest przesyłane.</p>
+    <h2>3. Przetwarzanie danych</h2>
+    <h3>Logi serwera hostingu</h3>
+    <p>Przy każdym żądaniu hosting zapisuje adres IP, datę i godzinę, adres strony, przeglądarkę i stronę odsyłającą. Cel: bezpieczeństwo usługi i diagnoza awarii. Podstawa prawna: prawnie uzasadniony interes wydawcy (art. 6 ust. 1 lit. f RODO). Okres przechowywania: według zasad hostingu.</p>
+    {GA4_ID ? (<>
+    <h3>Pomiar ruchu Google Analytics</h3>
+    <p>Serwis korzysta z Google Analytics 4, żeby liczyć wizyty i wiedzieć, które strony są przydatne: odsłony, źródło wejścia, czas wizyty, typ urządzenia i przeglądarki, przybliżony kraj i miasto. Google Analytics zapisuje dwa pliki cookie: <code>_ga</code>, który odróżnia odwiedzających losowym identyfikatorem, i <code>_ga_{G}</code>, który przechowuje stan wizyty. Ich ważność wynosi najwyżej 13 miesięcy (390 dni) i nie odnawia się przy każdej wizycie.</p>
+    <p>Google Analytics 4 nie zapisuje ani nie przechowuje adresu IP, używa go tylko w chwili zbierania danych do ustalenia przybliżonej lokalizacji. Adres strony przekazywany do Google Analytics jest pozbawiony parametrów, więc dane z linku do wyniku nie są przesyłane. Serwis nie wyświetla reklam: przechowywanie danych reklamowych, personalizacja reklam i sygnały Google są wyłączone.</p>
+    <p>Cel: pomiar ruchu. Podstawa prawna: prawnie uzasadniony interes wydawcy (art. 6 ust. 1 lit. f RODO). Dostawca: Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, Irlandia. Przechowywanie u Google: 14 miesięcy.</p>
+    </>) : (<>
+    <h3>Brak pomiaru ruchu</h3>
+    <p>Serwis nie zapisuje plików cookie i nie używa narzędzi statystycznych ani reklamowych.</p>
+    </>)}
+    {CLARITY_ID && (<>
+    <h3>Stabilność techniczna z Microsoft Clarity, bez plików cookie</h3>
+    <p>Żeby wykrywać błędy, wolne strony i niedziałające przyciski, serwis korzysta z Microsoft Clarity w trybie bez plików cookie: osobny identyfikator dla każdej odsłony, tekst strony i wpisane dane maskowane. Podstawa prawna: prawnie uzasadniony interes (art. 6 ust. 1 lit. f RODO). Dostawca: Microsoft Ireland Operations Limited, One Microsoft Place, South County Business Park, Leopardstown, Dublin 18, Irlandia. Przechowywanie: 30 dni dla nagrań, najwyżej 13 miesięcy dla danych zbiorczych.</p>
+    </>)}
+    <h3>Wiadomości do nas</h3>
+    <p>Jeśli piszesz na adres kontaktowy, Twój adres i wiadomość przechowujemy tak długo, jak trzeba, żeby odpowiedzieć i w razie potrzeby poprawić błąd, a najpóźniej trzy lata po ostatniej wymianie wiadomości je usuwamy. Podstawa prawna: prawnie uzasadniony interes wydawcy (art. 6 ust. 1 lit. f RODO).</p>
+    <h2>4. Odbiorcy</h2>
+    <p>Żadne dane nie są sprzedawane, wynajmowane ani przekazywane. Dostęp ma tylko hosting{GA4_ID && ', Google Ireland Limited w ramach Google Analytics'}{CLARITY_ID && ', Microsoft Ireland Operations Limited w ramach Clarity'}, jako podmioty przetwarzające w rozumieniu art. 28 RODO. W serwisie nie działa żadna sieć reklamowa.</p>
+    <h2>5. Przekazywanie danych poza Unię Europejską</h2>
+    <p>Logi hostingu mogą być przetwarzane w Stanach Zjednoczonych.{GA4_ID && ' Dane Google Analytics mogą być przekazywane do Google LLC w Stanach Zjednoczonych.'}{CLARITY_ID && ' Dane Clarity mogą być przekazywane do Microsoft Corporation w Stanach Zjednoczonych.'} Podstawą jest EU-U.S. Data Privacy Framework i standardowe klauzule umowne Komisji Europejskiej.</p>
+    <h2>6. Twoje prawa</h2>
+    <p>Masz prawo dostępu do danych, ich sprostowania, usunięcia, ograniczenia przetwarzania, sprzeciwu i przenoszenia, przewidziane w art. 15–22 RODO. Napisz na <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>; odpowiemy w ciągu miesiąca. Bez kont użytkowników zwykle nie mamy danych, które Cię identyfikują, i wtedy to napiszemy.</p>
+    {GA4_ID && (<p>Żeby sprzeciwić się pomiarowi ruchu bez pisania do nas, zablokuj lub usuń pliki cookie w ustawieniach przeglądarki albo zainstaluj <a href="https://tools.google.com/dlpage/gaoptout" rel="nofollow noopener" target="_blank">dodatek wyłączający Google Analytics</a>. Serwis działa tak samo.</p>)}
+    <p>Możesz złożyć skargę do organu nadzorczego: Prezesa Urzędu Ochrony Danych Osobowych (<a href="https://uodo.gov.pl" rel="nofollow noopener" target="_blank">uodo.gov.pl</a>) albo do organu właściwego dla wydawcy, {LEGAL.supervisoryAuthority} (<a href={LEGAL.supervisoryAuthorityUrl} rel="nofollow noopener" target="_blank">{LEGAL.supervisoryAuthorityUrl}</a>).</p>
+    <h2>7. Brak zautomatyzowanych decyzji</h2>
+    <p>Wynik obliczenia to szacunek przygotowany na Twoją prośbę, z Twoich danych, w Twojej przeglądarce. Nie wywołuje skutków prawnych i nie jest zautomatyzowaną decyzją w rozumieniu art. 22 RODO. Nie ma profilowania.</p>
+    <p>Zobacz też stronę <a href={route('cookies', lang)}>cookies</a>. Ostatnia aktualizacja: {LAST_UPDATED}.</p>
+  </>) : (<>
+    <h1>Privacy policy</h1>
+    <p>This page describes the processing of personal data linked to the use of {SITE_URL}, under Articles 12–14 of Regulation (EU) 2016/679 (GDPR).</p>
+    <h2>1. Controller</h2>
+    <LegalIdentity lang={lang} />
+    <p>For any question about your data: <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>. No data protection officer has been appointed, as the conditions of Article 37 GDPR are not met.</p>
+    <h2>2. What you type stays in your browser</h2>
+    <p>The calculations run in your browser. The municipality, size, use and amounts you enter <strong>are not sent to any server</strong>, are not stored and are not linked to any identifier. The site asks for no account, name or email address. The share link carries your inputs in the page address: send it only to people you choose. To suggest municipalities, your browser downloads the full list from our site; what you type is not transmitted.</p>
+    <h2>3. Processing</h2>
+    <h3>Hosting server logs</h3>
+    <p>For every request the host records the IP address, date and time, page requested, browser and referring page. Purpose: service security and fault diagnosis. Legal basis: the publisher’s legitimate interest (Article 6(1)(f) GDPR). Retention: according to the host’s policy.</p>
+    {GA4_ID ? (<>
+    <h3>Audience measurement with Google Analytics</h3>
+    <p>The site uses Google Analytics 4 to count visits and learn which pages are useful: page views, referrer, visit length, device and browser type, approximate country and city. Google Analytics sets two cookies: <code>_ga</code>, which tells visitors apart with a random identifier, and <code>_ga_{G}</code>, which keeps the state of the visit. They last at most 13 months (390 days) and are not renewed on each visit.</p>
+    <p>Google Analytics 4 does not log or store IP addresses; it uses them only at collection time to derive approximate location. The page address sent to Google Analytics has its parameters removed, so share-link data are not transmitted. The site shows no advertising: ad storage, ad personalisation and Google signals are off.</p>
+    <p>Purpose: audience measurement. Legal basis: the publisher’s legitimate interest (Article 6(1)(f) GDPR). Provider: Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, Ireland. Retention at Google: 14 months.</p>
+    </>) : (<>
+    <h3>No audience measurement</h3>
+    <p>The site sets no cookies and uses no statistics or advertising tools.</p>
+    </>)}
+    {CLARITY_ID && (<>
+    <h3>Technical stability with Microsoft Clarity, without cookies</h3>
+    <p>To detect errors, slow pages and buttons that do not respond, the site uses Microsoft Clarity in cookieless mode: a separate identifier for each page view, page text and inputs masked. Legal basis: legitimate interest (Article 6(1)(f) GDPR). Provider: Microsoft Ireland Operations Limited, One Microsoft Place, South County Business Park, Leopardstown, Dublin 18, Ireland. Retention: 30 days for recordings, at most 13 months for aggregate data.</p>
+    </>)}
+    <h3>Messages you send us</h3>
+    <p>If you write to the contact address, your address and message are kept as long as needed to reply and, where relevant, fix an error, and deleted at the latest three years after the last exchange. Legal basis: the publisher’s legitimate interest (Article 6(1)(f) GDPR).</p>
+    <h2>4. Recipients</h2>
+    <p>No data are sold, rented or passed on. Only the host{GA4_ID && ', Google Ireland Limited for Google Analytics'}{CLARITY_ID && ', Microsoft Ireland Operations Limited for Clarity'} have access, as processors under Article 28 GDPR. No advertising network runs on the site.</p>
+    <h2>5. Transfers outside the European Union</h2>
+    <p>Hosting logs may be processed in the United States.{GA4_ID && ' Google Analytics data may be transferred to Google LLC in the United States.'}{CLARITY_ID && ' Clarity data may be transferred to Microsoft Corporation in the United States.'} These transfers rely on the EU-U.S. Data Privacy Framework and the European Commission’s standard contractual clauses.</p>
+    <h2>6. Your rights</h2>
+    <p>You have the rights of access, rectification, erasure, restriction, objection and portability under Articles 15–22 GDPR. Write to <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>; we reply within a month. Without user accounts we usually hold no data identifying you, and we will tell you so.</p>
+    {GA4_ID && (<p>To object to audience measurement without writing to us, block or delete cookies in your browser settings, or install the <a href="https://tools.google.com/dlpage/gaoptout" rel="nofollow noopener" target="_blank">Google Analytics opt-out add-on</a>. The site works the same.</p>)}
+    <p>You can lodge a complaint with a supervisory authority: the Polish President of the Personal Data Protection Office (<a href="https://uodo.gov.pl" rel="nofollow noopener" target="_blank">uodo.gov.pl</a>) or the authority competent for the publisher, {LEGAL.supervisoryAuthority} (<a href={LEGAL.supervisoryAuthorityUrl} rel="nofollow noopener" target="_blank">{LEGAL.supervisoryAuthorityUrl}</a>).</p>
+    <h2>7. No automated decisions</h2>
+    <p>A calculation result is an estimate produced at your request, from your inputs, in your browser. It has no legal effect and is not an automated decision under Article 22 GDPR. There is no profiling.</p>
+    <p>See also the <a href={route('cookies', lang)}>cookies</a> page. Last updated: {LAST_UPDATED}.</p>
+  </>)}
+  </div>
+</PageLayout>

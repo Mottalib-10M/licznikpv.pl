@@ -1,0 +1,57 @@
+---
+/**
+ * Strona główna języka (RECETTE §5), układ własny : pytanie (gmina) i odpowiedź (oszczędność) od razu,
+ * pod nimi zwinięty akapit, potem karty tematów z liczbą kluczową każdego z nich, potem tekst.
+ * Treść w src/content/home.ts.
+ */
+import PageLayout from '../layouts/PageLayout.astro';
+import Tool from './tools/Tool';
+import MiniSim from './calc/MiniSim';
+import Clamp from './Clamp.astro';
+import { HOME } from '../content/home';
+import { route, type Locale } from '../i18n/routes';
+import { label } from '../i18n/nav';
+import { pageById } from '../lib/pages';
+import { helpers } from '../lib/helpers';
+import { P, sourceUrl, type SourceKey } from '../lib/engine/params';
+import { AUTHOR_NAME } from '../data/site-config';
+import { faqSchema, organizationSchema, websiteSchema, webPageSchema, webApplicationSchema } from '../lib/seo';
+interface Props { lang: Locale }
+const { lang } = Astro.props;
+const x = HOME[lang];
+const H = helpers(lang);
+const path = route('home', lang);
+const parts = x.body(H).split(/<!--(mini:[A-Za-z0-9_]+)-->/);
+const resume = x.resume(H);
+const faqs = x.faqs(H);
+const keys: SourceKey[] = ['pvgis', 'ozeAct', 'rcem', 'rceApi', 'ureTaryfy2026', 'cpNaCo', 'pme', 'psgTaryfa', 'gusCoal'];
+const sources = keys.map((k) => ({ name: P.sources[k].label[lang], url: sourceUrl(k) }));
+const jsonLd = [websiteSchema(lang), organizationSchema(lang), webPageSchema({ name: x.h1, description: x.description, path, lang }), webApplicationSchema({ name: x.h1, description: x.description, path, lang }), faqSchema(faqs, lang)];
+const by = H.T('Opracowanie', 'By');
+const cards = x.cards(H);
+---
+<PageLayout title={x.title} description={x.description} lang={lang} jsonLd={jsonLd} faqs={faqs} sources={sources}>
+  <header class="mb-3">
+    <h1 style="hyphens: manual" class="text-[1.75rem] font-bold text-navy-900 max-sm:leading-tight sm:text-3xl md:text-4xl">{x.h1}</h1>
+    <p class="mt-2 text-base text-navy-700 max-sm:text-[0.95rem] sm:text-lg">{x.intro}</p>
+  </header>
+  <div data-outil><Tool client:load tool="pv" arg="6" lang={lang} id="start" methodHref={route('method', lang)} /></div>
+  <Clamp text={resume} lang={lang} id="clamp-home" sentences={2} class="mt-3" />
+  <p class="mt-3 text-sm text-navy-700">{by} <a href={route('about', lang)} class="underline">{AUTHOR_NAME}</a> · <a href={route('method', lang)} class="underline">{label('method', lang)}</a> · <a href={route('about', lang)} class="underline">{label('about', lang)}</a></p>
+  <section class="mt-10" aria-labelledby="tematy">
+    <h2 id="tematy" class="mb-4 text-2xl font-bold text-navy-900">{x.cardsTitle}</h2>
+    <ul class="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+      {cards.map((c) => (
+        <li class="rounded-xl border border-navy-200 bg-white p-4">
+          <p class="text-xs font-semibold uppercase tracking-wide text-accent-700">{c.kicker}</p>
+          <p class="tabular-nums mt-1 text-2xl font-bold text-navy-900">{c.figure}</p>
+          <p class="mt-1 text-sm text-navy-700">{c.text}</p>
+          <a href={route(c.id, lang)} class="mt-2 inline-block text-sm font-medium text-accent-700 underline">{pageById(c.id)?.[lang].nav ?? label(c.id, lang)}</a>
+        </li>
+      ))}
+    </ul>
+  </section>
+  <div class="prose prose-slate mt-10 max-w-none">
+    {parts.map((p, i) => i % 2 === 0 ? <Fragment set:html={p} /> : <div data-chrome><MiniSim client:load kind={p.slice(5)} lang={lang} href={route('home', lang)} /></div>)}
+  </div>
+</PageLayout>
