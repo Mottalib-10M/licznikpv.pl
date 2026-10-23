@@ -1,4 +1,4 @@
-name: Ceny PSE (RCEm, RCE) : odświeżenie i publikacja
+name: "Ceny PSE (RCEm, RCE) : odświeżenie i publikacja"
 
 # PSE publikuje RCEm dziesiątego dnia roboczego kolejnego miesiąca, a ceny RCE codziennie w API raportów.
 # Skrypt uruchamia się 12., 15. i 20. dnia każdego miesiąca (na wypadek późniejszej publikacji lub korekty),
