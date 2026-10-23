@@ -1,6 +1,6 @@
 {
- "name": "Bilans PV",
- "short_name": "Bilans PV",
+ "name": "Licznik PV",
+ "short_name": "Licznik PV",
  "description": "Fotowoltaika w Twojej gminie: produkcja PVGIS, autokonsumpcja, wartość nadwyżki w net-billingu po RCE, dotacje Czyste Powietrze i magazyn energii, pompa ciepła.",
  "start_url": "/pl/",
  "display": "standalone",

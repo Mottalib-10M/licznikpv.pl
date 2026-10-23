@@ -1,6 +1,6 @@
 /** Configuration centrale du site (générée par new-site.py). */
-export const SITE_URL = "https://pl-fotowoltaika.example";
-export const SITE_NAMES: Record<string, string> = {"pl": "Bilans PV", "en": "Bilans PV"};
+export const SITE_URL = "https://licznikpv.pl";
+export const SITE_NAMES: Record<string, string> = {"pl": "Licznik PV", "en": "Licznik PV"};
 export const LANG_TAGS: Record<string, string> = {"pl": "pl-PL", "en": "en-PL"};
 export const OG_LOCALES: Record<string, string> = {"pl": "pl_PL", "en": "en_GB"};
 export const LOCALE_TAG = 'pl-PL';
@@ -16,7 +16,7 @@ export const AUTHOR_DESC: Record<string, string> = {"pl": "Radif Partners liczy 
  *  themes reellement traites par le site, pas une liste de mots-cles : un sujet
  *  declare ici sans page qui le couvre est une declaration fausse. */
 export const KNOWS_ABOUT: Record<string, string[]> = {"pl": ["Produkcja instalacji fotowoltaicznej w gminach Polski (PVGIS)", "Net-billing: RCE, RCEm i depozyt prosumencki (art. 4b i 4c ustawy o OZE)", "Program Czyste Powietrze: progi dochodowe i kwoty dotacji", "Przydomowe Magazyny Energii i koniec programu Mój Prąd 6.0", "Koszt ogrzewania pompą ciepła, węglem i gazem"], "en": ["Rooftop solar yield across Polish gminas (PVGIS)", "Polish net-billing: RCE, RCEm and the prosumer deposit", "Czyste Powietrze grant: income thresholds and amounts", "Polish home battery grants after Mój Prąd 6.0", "Heating cost in Poland: heat pump, coal and gas"]};
-export const CONTACT_EMAIL = "contact@pl-fotowoltaika.example";
+export const CONTACT_EMAIL = "contact@licznikpv.pl";
 export const THEME_COLOR = '#A61B29';
 export const LOGO_SYMBOL = 'PV';
 export const BING_VERIFY_CODE = '';

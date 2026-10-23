@@ -18,7 +18,7 @@ import { SITE_URL, SITE_NAMES } from '../../data/site-config';
     <div id="en-view" hidden><PvCalc client:load lang="en" id="emen" /></div>
     <p class="mt-2 text-center text-xs text-navy-600"><a id="credit" href={`${SITE_URL}/pl/`} target="_blank" rel="noopener" class="underline">Kalkulator fotowoltaiki 2026 · {SITE_NAMES.pl}</a></p>
     <script is:inline>
-      if (new URLSearchParams(location.search).get('lang') === 'en') { document.getElementById('pl-view').hidden = true; document.getElementById('en-view').hidden = false; document.documentElement.lang = 'en'; var c = document.getElementById('credit'); c.textContent = 'Solar calculator 2026 · Bilans PV'; c.href = c.href.replace('/pl/', '/en/'); }
+      if (new URLSearchParams(location.search).get('lang') === 'en') { document.getElementById('pl-view').hidden = true; document.getElementById('en-view').hidden = false; document.documentElement.lang = 'en'; var c = document.getElementById('credit'); c.textContent = 'Solar calculator 2026 · Licznik PV'; c.href = c.href.replace('/pl/', '/en/'); }
     </script>
   </body>
 </html>
